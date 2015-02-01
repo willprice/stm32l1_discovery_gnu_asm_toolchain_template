@@ -19,8 +19,8 @@ STFLASH       = st-flash
 ## TARGETS ##
 all: flash
 
-debug: $(PROJ_NAME).elf $(SRCS)	
-	$(GDB) $(PROJ_NAME).elf -ex="tar extended-remote :4242" -ex="load"	
+debug: $(PROJ_NAME).elf flash
+	$(GDB) $< -ex="tar extended-remote :4242" -ex="load"	
 
 %.elf: %.s $(SYSTEM_DEPS)
 	$(CC) $(CFLAGS) -T $(LINKER_SCRIPT) $^ $(STARTUP) -o $@
