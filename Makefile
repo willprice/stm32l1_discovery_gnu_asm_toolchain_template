@@ -1,7 +1,7 @@
 SYSTEM_DEPS = System_Init.s
 
 SRCS = Lab1-Task1.s
-PROJ_NAME = main
+PROJ_NAME = lab1
 
 CC_PREFIX     = arm-none-eabi-
 CC            = $(CC_PREFIX)gcc
@@ -22,7 +22,7 @@ all: flash
 debug: $(PROJ_NAME).elf flash
 	$(GDB) $< -ex="tar extended-remote :4242" -ex="load"	
 
-%.elf: %.s $(SYSTEM_DEPS)
+$(PROJ_NAME).elf: $(SRCS) $(SYSTEM_DEPS)
 	$(CC) $(CFLAGS) -T $(LINKER_SCRIPT) $^ $(STARTUP) -o $@
 
 %.bin: %.elf
