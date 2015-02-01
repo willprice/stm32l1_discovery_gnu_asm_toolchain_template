@@ -62,8 +62,9 @@ You can then run `continue` in the gdb console to start running the code.
 Note: This requires you to already be running the `stlink` project and connected
 to the device by first runnnig the command `st-util`.
 
-## Contributing 1. Fork and fix it yourself and submit a pull request 2. 2. Open
-issue
+## Contributing 
+1. Fork and fix it yourself and submit a pull request 
+2. Open an issue describing the problem
 
 
 If you're interested in running OpenOCD I suggest you look at this Makefile
