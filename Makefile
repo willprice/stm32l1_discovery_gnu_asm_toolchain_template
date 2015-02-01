@@ -31,4 +31,4 @@ flash:
 clean:
 	rm $(PROJ_NAME).elf $(PROJ_NAME).bin
 
-.PHONY: clean all
+.PHONY: all clean debug program flash
