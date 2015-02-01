@@ -2,17 +2,17 @@ SRCS = System_Init.s Lab1-Task1.s
 
 PROJ_NAME = main
 
-CC_PREFIX = arm-none-eabi-
-CC = $(CC_PREFIX)gcc
-OBJCOPY = $(CC_PREFIX)objcopy
-GDB = $(CC_PREFIX)gdb
-STARTUP = startup_stm32l1xx_md.s
-CFLAGS += -mcpu=cortex-m3 -mthumb -nostdlib -g
+CC_PREFIX     = arm-none-eabi-
+CC            = $(CC_PREFIX)gcc
+OBJCOPY       = $(CC_PREFIX)objcopy
+GDB           = $(CC_PREFIX)gdb
+STARTUP       = startup_stm32l1xx_md.s
+CFLAGS +      = -mcpu=cortex-m3 -mthumb -nostdlib -g
 LINKER_SCRIPT = ld/stm32.ld
 
 ## ST-UTIL ##
-STUTIL = st-util
-STFLASH = st-flash
+STUTIL        = st-util
+STFLASH       = st-flash
 
 
 ## TARGETS ##
