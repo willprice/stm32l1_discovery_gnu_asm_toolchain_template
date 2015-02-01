@@ -1,0 +1,10 @@
+include STM32-asm.include
+
+## ST-UTIL ##
+STUTIL        = st-util
+STFLASH       = st-flash
+
+flash: $(PROJ_NAME).bin
+	$(STFLASH) write $< 0x08000000 
+
+# vim: ft=make

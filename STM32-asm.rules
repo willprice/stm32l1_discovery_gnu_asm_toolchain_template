@@ -1,0 +1,48 @@
+# Project variables #
+SYSTEM_DEPS        =  $(STM32DISCOVERY_LIB)/lib/System_Init.s
+LINKER_SCRIPT      =  $(STM32DISCOVERY_LIB)/lib/ld/stm32.ld
+STARTUP_ASM        =  $(STM32DISCOVERY_LIB)/lib/startup_stm32l1xx_md.s
+
+
+# Toolchain variables #
+CC_PREFIX          =  arm-none-eabi-
+CC                 =  $(CC_PREFIX)gcc
+OBJCOPY            =  $(CC_PREFIX)objcopy
+GDB                =  $(CC_PREFIX)gdb
+
+
+# The STM32l Discovery board is based on an M3 chip
+CFLAGS            +=  -mcpu=cortex-m3
+# Writing in thumb assembly code, not ARM
+CFLAGS            += -mthumb
+ # We're writing bare metal code, so no need for any libraries
+CFLAGS            += -nostdlib
+# Fix a M3 silicon error to do with a specific
+# case of LDRD use cases (might not be necessary)
+CFLAGS            += -mfix-cortex-m3-ldrd
+
+
+# Set default variables if user hasn't specified them
+SRCS ?= $(PROJ_NAME).s
+
+
+## TARGETS ##
+all: flash
+
+debug: $(PROJ_NAME).elf flash
+	$(GDB) $< -ex="tar extended-remote :4242" -ex="load"	
+
+%.elf: $(SRCS) $(SYSTEM_DEPS)
+	$(CC) $(CFLAGS) -T $(LINKER_SCRIPT) $^ $(STARTUP_ASM) -o $@
+
+%.bin: %.elf
+	$(OBJCOPY) -O binary $< $@
+
+%.hex: %.elf
+	$(OBJCOPY) -Oihex $< $@
+
+clean:
+	-@rm *.elf *.bin
+
+.PHONY: all clean debug program flash
+# vim: ft=make

@@ -1,0 +1,16 @@
+include $(STM32DISCOVERY_LIB)/STM32-asm.rules
+
+## OPENOCD ##
+OOCD          = openocd
+OOCD_BOARD    = stm32ldiscovery
+
+.PHONY: flash
+flash: $(PROJ_NAME).hex
+	$(OOCD) -f "board/$(OOCD_BOARD).cfg" \
+					-c "init" -c "targets" -c "halt" \
+					-c "flash write_image erase $<" \
+					-c "verify_image $<" \
+					-c "reset run" \
+					-c "shutdown"
+
+# vim: ft=make
